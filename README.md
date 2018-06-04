@@ -9,7 +9,7 @@
 
 ## Write Up
 
-[查看WriteUp](writeup/writeup.md)
+[查看WriteUp](http://t.cn/R1R1nMp)
 
 ## 解题思路
 
