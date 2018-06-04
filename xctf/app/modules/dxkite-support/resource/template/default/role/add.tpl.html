@@ -1,0 +1,39 @@
+@if($:invaildName(false))
+<div class="alert alert-danger" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+    <strong>@_('角色名称已存在')</strong> @_('角色名称已存在，请重新添加分组信息')
+</div>
+@endif
+<form method="POST" action="@u">
+    <div class="form-group row">
+        <label for="name" class="col-2 col-form-labe">@_('角色名')</label>
+        <div class="col-10">
+            <input type="text" name="name" class="form-control" id="name" placeholder="@_('角色名')" value="{{$:name('')}}" required>
+        </div>
+    </div>
+    <fieldset class="form-group">
+        <legend>权限选择</legend>
+        <ul>
+            @foreach($:auths as $name=>$body)
+            <li class="form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" name="auths[{{$name}}]" value="1">
+                    {{__($body['name'])}}
+                </label>
+                <ul>
+                    @foreach($body['childs'] as $id=>$auth)
+                    <li class="form-check">
+                        <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" name="auths[{{$name}}.{{$id}}]" value="1">
+                        {{__($auth)}}
+                    </label>
+                    </li>
+                    @endforeach
+                </ul>
+            </li>@endforeach
+        </ul>
+    </fieldset>
+    <button type="submit" class="btn btn-primary">@_('添加分组')</button>
+</form>

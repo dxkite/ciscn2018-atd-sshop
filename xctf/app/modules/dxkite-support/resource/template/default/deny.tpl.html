@@ -1,0 +1,17 @@
+@set('title',__('拒绝访问 权限不足').' - '.@setting('website_name')) @startInsert('bs-head')
+<link href="@static('support')/setting.css" rel="stylesheet"> @endInsert @startInsert('bs-content') @include('header')
+<div class="container-fluid">
+    <div class="row">
+        @include('sidebar')
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="jumbotron bg-white">
+                <h1 class="display-4">{= 权限不足 }</h1>
+                <p class="lead">你没有访问当前页面的权限，请联系管理员授权访问</p>
+                <hr class="my-4">
+                <p>该功能由细粒度权限审计支持，由
+                    <a href="https://githuhttps://github.com/DXkite/suda">Suda {{SUDA_VERSION}}</a> 强力驱动</p>
+            </div>
+        </main>
+    </div>
+</div>
+@endInsert @include('bootstrap')

@@ -1,0 +1,43 @@
+@insert('setting-index-panel:before')
+<h4>@_('当前环境信息')</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>@_('配置项')</th>
+            <th>@_('信息')</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@_('服务器')</td>
+            <td>{{ $:version.server }}</td>
+        </tr>
+        <tr>
+            <td>PHP </td>
+            <td>{{$:version.php}}</td>
+        </tr>
+        <tr>
+            <td>MySQL</td>
+            <td>{{ $:version.mysql }}</td>
+        </tr>
+        <tr>
+            <td>@_('框架')</td>
+            <td>{{ $:version.suda }}</td>
+        </tr>
+        <tr>
+            <td>@_('GD库')</td>
+            <td>{{ $:version.gd }}</td>
+        </tr>
+        <tr>
+            <td>@_('文件上传限制大小')</td>
+            <td>{{ $:upload }}</td>
+        </tr>
+        <tr>
+            <td>@_('时区')</td>
+            <td>{{ setting('timezone', 'PRC') }} - {{ date('Y-m-d H:i:s') }}</td>
+        </tr>
+    </tbody>
+</table>
+{:setting-index-panel:after}
+@insert('setting-index-panel:after') 
+ 

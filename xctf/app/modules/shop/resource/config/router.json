@@ -1,0 +1,92 @@
+{
+    "index": {
+        "class": "xctf.shop.response.shop.ShopListResponse",
+        "method": ["GET"],
+        "url": "\/"
+    },
+    "shopList": {
+        "class": "xctf.shop.response.shop.ShopListResponse",
+        "method": ["GET"],
+        "url": "\/shop"
+    },
+    "shopDetail": {
+        "class": "xctf.shop.response.shop.ShopDetailResponse",
+        "method": ["GET"],
+        "url": "\/info\/{id:int}"
+    },
+    "secKill": {
+        "class": "xctf.shop.response.shop.SecKillResponse",
+        "method": ["GET", "POST"],
+        "url": "\/seckill"
+    },
+    "shopCar": {
+        "class": "xctf.shop.response.shop.ShopCarResponse",
+        "method": ["GET", "POST"],
+        "url": "\/shopcar"
+    },
+    "shopCarAdd": {
+        "class": "xctf.shop.response.shop.ShopCarAddResponse",
+        "method": ["POST"],
+        "url": "\/shopcar\/add"
+    },
+    "shopPay": {
+        "class": "xctf.shop.response.shop.ShopPayResponse",
+        "method": ["POST"],
+        "url": "\/pay"
+    },
+    "captcha": {
+        "class": "xctf.shop.response.CaptchaResponse",
+        "method": ["GET"],
+        "url": "\/captcha"
+    },
+    "user": {
+        "class": "xctf.shop.response.user.UserInfoResponse",
+        "method": ["GET"],
+        "url": "\/user"
+    },
+    "userChange": {
+        "class": "xctf.shop.response.user.ChangePasswordResponse",
+        "method": ["GET", "POST"],
+        "url": "\/user\/change"
+    },
+    "resetPassword": {
+        "class": "xctf.shop.response.user.ResetPasswordResponse",
+        "method": ["GET", "POST"],
+        "url": "\/pass\/reset"
+    },
+    "login": {
+        "class": "xctf.shop.response.user.UserLoginResponse",
+        "method": ["GET", "POST"],
+        "url": "\/login"
+    },
+    "logout": {
+        "class": "xctf.shop.response.user.UserLogoutResponse",
+        "method": ["GET"],
+        "url": "\/logout"
+    },
+    "register": {
+        "class": "xctf.shop.response.user.RegisterResponse",
+        "method": ["GET", "POST"],
+        "url": "\/register"
+    },
+    "search": {
+        "class": "xctf.shop.response.block.SearchResponse",
+        "method": ["GET"],
+        "url": "\/ciscn_block\/search[\/{hash:string}]"
+    },
+    "dig": {
+        "class": "xctf.shop.response.block.DigResponse",
+        "method": ["GET"],
+        "url": "\/ciscn_block\/dig\/{hash:string}"
+    },
+    "tip": {
+        "class": "xctf.shop.response.block.TipResponse",
+        "method": ["GET"],
+        "url": "\/ciscn_block"
+    },
+    "download": {
+        "class": "xctf.shop.response.DownloadResponse",
+        "method": ["GET"],
+        "url": "\/download"
+    }
+}

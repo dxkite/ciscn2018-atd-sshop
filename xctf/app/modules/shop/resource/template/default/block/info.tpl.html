@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>FlagCoin Block #
+        {{ $:block.id }}
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <link rel="stylesheet" href="@static/block/overrides.min.css">
+    <link rel="stylesheet" href="@static/block/blockchain.css">
+    <META NAME="Description" CONTENT="Transactions contained within bitcoin block 151564">
+</head>
+
+<body class="opaque-nav">
+    <div class="container pt-100" style="padding-top: 100px;">
+        <h1 style="padding-bottom:10px">FlagCoin Block #
+            {{ $:block.id }}
+        </h1>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <table class="table table-striped">
+                    <tr>
+                        <th colspan="2">Summary</th>
+                    </tr>
+                    <tr>
+                        <td>Height</td>
+                        <td>
+                            {{ $:block.id }}
+                            <font color="green">(Main Chain)
+                            </font>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Timestamp</td>
+                        <td>
+                            {{ date("Y-m-d H:i:s", $:block.time) }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Received Time</td>
+                        <td>
+                            {{ date("Y-m-d H:i:s", $:block.time) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Relayed By</td>
+                        <td>Unknown</td>
+                    </tr>
+
+                    <tr>
+                        <td>Difficulty</td>
+                        <td>1,203,461.93</td>
+                    </tr>
+                    <tr>
+                        <td>Version</td>
+
+                        <td>1</td>
+
+
+                    </tr>
+                    <tr>
+                        <td>Nonce
+                            <br>(Random)</td>
+                        <td>
+                            {{ $:block.nonce }}
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>Hash</td>
+                        <td>
+                            {{ $:block.hash }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Previous Block</td>
+                        <td>
+                            {{ $:block.previous_hash }}
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+        </div>
+
+        <div style="width:100%; clear:both;">
+            <h2>Transactions</h2>
+            <div id="tx-1818488" class="txdiv">
+                <table class="table table-striped" cellpadding="0" cellspacing="0" style="padding:0px;float:left;margin:0px;width:100%">
+                    <tr>
+                        <th colspan="3" align="left">原始数据
+                            <span class="pull-right">
+                                {{ date("Y-m-d H:i:s", $:block.time) }}
+                            </span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td class="txtd hidden-phone mobile-f12 stack-mobile">
+                            <b>No Inputs (Newly Generated Coins)</b>
+                        </td>
+                        <td class="hidden-phone tx-arrow-col">
+                            <img src="@static/block/arrow_right_green.png" />
+                        </td>
+                        <td class="txtd mobile-f12 stack-mobile">
+                            <a href="@u('dig',$:wallet)">{{$:wallet}}</a>
+                            <span class="pull-right hidden-phone">
+                                <span data-c="5001200000" data-time="1320247366000">1.00 FC</span>
+                            </span>
+                            <br />
+                        </td>
+                    </tr>
+                </table>
+                <div style="padding-bottom:30px;width:100%;text-align:right;clear:both">
+                    <button class="btn btn-success cb">
+                        <span data-c="5001200000" data-time="1320247366000">1.00 FC</span>
+                    </button>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+
+</body>
+
+</html>

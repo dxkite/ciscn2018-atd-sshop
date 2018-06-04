@@ -1,0 +1,14 @@
+@startInsert('body')
+<div class="jumbotron user-info">
+    <h1 class="user-username">{{ $:user.username }}</h1>
+    <h3 class="user-email">邮箱地址：{{ $:user.mail }}</h3>
+    <h3 class="user-integral">剩余积分：@float($:user.integral) </h3>
+    <h3 class="user-wallet"> Flag Coin 钱包：{{$:user.wallet}} </h3>
+    <h3 class="user-flagcoin">Flag Coin：@float($:flagcoin) </h3>
+    @if (conf('flagEnough'))
+    <a class="btn btn-lg btn-success" href="@static/snow.html">Buy Flag </a>
+    @else
+    <button class="btn btn-lg btn-success" disabled>Buy Flag ({{conf('flagCoin')}}.00 FC)</button>
+    @endif
+</div>
+@endInsert @include ('layout')

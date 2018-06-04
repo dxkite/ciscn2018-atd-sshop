@@ -1,0 +1,50 @@
+{
+    "database": {
+        "name": "管理备份",
+        "childs": {
+            "list_tables": "列出数据库信息",
+            "create_backup": "创建备份数据",
+            "export_table": "备份数据表",
+            "import_table": "恢复数据表",
+            "delete_backup": "删除备份数据",
+            "list_backups": "列出备份",
+            "optimize_tables": "优化数据表",
+            "repair_tables": "修复数据表"
+        }
+    },
+    "visitor": {
+        "name": "管理访问者",
+        "childs": {
+            "simulate": "切换用户"
+        }
+    },
+    "role": {
+        "name": "管理授权",
+        "childs": {
+            "create": "添加授权",
+            "grant": "赋予授权",
+            "edit":"权限编辑",
+            "list": "列出权限",
+            "delete": "删除权限",
+            "revoke": "撤销权限"
+        }
+    },
+    "template": {
+        "name": "模板权限",
+        "childs": {
+            "upload": "上传模板",
+            "delete": "删除模板",
+            "list": "显示模板",
+            "refersh": "刷新资源"
+        }
+    },
+    "website": {
+        "name": "网站管理权限",
+        "childs": {
+            "setEmail": "设置邮件",
+            "viewEmail":"查看邮件",
+            "info": "查看网站信息",
+            "listSetting":"列出网站设置"
+        }
+    }
+}

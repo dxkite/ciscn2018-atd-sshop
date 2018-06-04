@@ -1,0 +1,27 @@
+{
+    "debug": true,
+    "debug-passwd": "dxkite",
+    "debug-local": true,
+    "timelimit": 0,
+    "timezone": "PRC",
+    "markVersion": false,
+    "csrfName": "_xsrf",
+    "defaultIntegral": 1000,
+    "targetPrice": 1999,
+    "walletSeed": "dxkite",
+    "language": "zh-CN",
+    "blockHash": "12",
+    "flagCoin":500,
+    "debugSecret":"ZHhraXRl",
+    "debugCookie":"__debug",
+    "database": {
+        "prefix": "dx_",
+        "host": "127.0.0.1",
+        "port": 3306,
+        "name": "xctf_sshop",
+        "user": "root",
+        "passwd": "root",
+        "charset": "utf8"
+    },
+    "non-static": "php"
+}

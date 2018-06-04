@@ -1,0 +1,9 @@
+# 应用数据
+/app/data
+# 静态数据
+/public/assets
+/public/chin
+# DXkite本地开发环境
+/public/dx.php
+/public/dx-dev.php
+.vscode

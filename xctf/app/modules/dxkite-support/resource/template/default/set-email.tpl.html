@@ -1,0 +1,52 @@
+<form action="@self" method="POST">
+    <fieldset class="p-3">
+        <legend>SMTP基本设置</legend>
+        <div class="form-group row">
+            <label for="input_server" class="col-2 col-form-label">服务器</label>
+            <div class="col-10">
+                <div class="input-group">
+                    <input type="text" name="smtp[server]" class="form-control col-10" value="{{ $:smtp['server'] ?? 'smtp.qq.com' }}">
+                    <input type="number" name="smtp[port]" class="form-control col-2" value="{{ $:smtp['port'] ?? 25 }}" placeholder="端口">
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="smtp_name" class="col-2 col-form-label">用户名</label>
+            <div class="col-10">
+                <input name="smtp[name]" class="form-control" type="text" value="{{ $:smtp['name'] ?? '' }}" id="smtp_name">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="smtp_email" class="col-2 col-form-label">邮件</label>
+            <div class="col-10">
+                <input name="smtp[email]" class="form-control" type="email" value="{{ $:smtp['email'] ?? '' }}" id="smtp_email">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="smtp_passwd" class="col-2 col-form-label">密码</label>
+            <div class="col-10">
+                <input name="smtp[passwd]" class="form-control" type="password" value="{{ $:smtp['passwd'] ?? '' }}" id="smtp_passwd">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="smtp_timeout" class="col-2 col-form-label">超时设置</label>
+            <div class="col-10">
+                <input name="smtp[timeout]" class="form-control" type="number" value="{{ $:smtp['timeout'] ?? '' }}" id="smtp_timeout">
+            </div>
+        </div>
+        <div class="form-check">
+            <label for="smtp_ssl" class="form-check-label">
+                <input name="smtp[ssl]" class="form-check-input" type="checkbox" value="true" id="smtp_ssl" @if ($:smtp[ 'ssl']??false) checked
+                    @endif> 开启SSL
+            </label>
+        </div>
+        <div class="form-check">
+            <label for="smtp_auth" class="form-check-label">
+                <input name="smtp[auth]" class="form-check-input" type="checkbox" value="true" id="smtp_auth" @if ($:smtp[ 'auth']??false)
+                    checked @endif> 开启验证
+            </label>
+        </div>
+    </fieldset>
+    <button class="btn btn-primary">保存设置</button>
+</form>

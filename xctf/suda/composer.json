@@ -1,0 +1,18 @@
+{
+    "name": "dxkite/suda",
+    "description": "a php7 only framework!",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "DXkite",
+            "email": "DXkite@163.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "": "system/src/"
+        }
+    },
+    "require": {}
+}

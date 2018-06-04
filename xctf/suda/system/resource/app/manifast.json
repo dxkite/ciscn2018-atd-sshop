@@ -1,0 +1,12 @@
+{
+    "namespace": "cn\\atd3",
+    "version": "1.0-dev",
+    "application": "suda\\core\\Application",
+    "modules": ["suda", "default"],
+    "language": "zh-CN",
+    "url": {
+        "mode": 0,
+        "beautify": true,
+        "rewrite": true
+    }
+}

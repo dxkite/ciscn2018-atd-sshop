@@ -1,0 +1,255 @@
+<div class="my-2 d-flex justify-content-between">
+    <a href="#" class="btn btn-success" id="create">新建备份</a>
+    <a href="#" class="btn btn-primary" id="upload-backup-button">上传备份</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>{=名称}</th>
+            <th>{=创建时间}</th>
+            <th>{=最后修改}</th>
+            <th>{=操作}</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($:list([]) as $name => $item)
+        <tr>
+            <td>{{$name}}</td>
+
+            <td>@time($item->create)</td>
+            <td>@time($item->modify)</td>
+            <td>
+                <div class="btn-group btn-group-toggle">
+                    <a class="btn btn-success btn-sm" href="#" data-import="{{$name}}">恢复</a>
+                    <a class="btn btn-warning btn-sm" href="#" data-force-import="{{$name}}">强制恢复</a>
+                    <a class="btn btn-danger btn-sm" href="@self(['delete'=>$name])">{=删除}</a>
+                </div>
+                <a class="btn btn-primary btn-sm" href="@u('support:admin_download',['name'=>$name])">下载</a>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+
+
+@startInsert('bs-footer')
+<div class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="title">@_('备份进度')</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div id="progress" class="progress-bar" role="progressbar" style="width: 0%; transition: 0.3s;" aria-valuenow="0" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                </div>
+                <div id="progress-log"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="ok" data-dismiss="modal" disabled>@_('确认')</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="@static('support')/call.js" data-api="@api(:v1.0)"></script>
+<script>
+    $(function () {
+        async function importDatabase(backupName, importFrom) {
+            const ret = await dx.acall('database', 'backupInfo', [backupName]);
+            console.log(ret);
+            if (typeof ret.result == 'undefined') {
+
+            } else {
+                $("#progress").removeClass("bg-warning");
+                const tables = ret.result.tables;
+                var len = 100 / tables.length;
+                var doing = 0;
+                for (var name in tables) {
+                    const retval = await dx.acall('database', importFrom, [backupName, tables[
+                        name]]);
+                    if (retval.result) {
+                        $("#progress-log").append(
+                            '<div> {= 从表} ' + tables[name] +
+                            ' {= 恢复数据成功}</div>'
+                        );
+                        doing += len;
+                        $("#progress").css({
+                            width: doing + "%"
+                        }).attr("aria-valuenow", doing).text(parseInt(doing) + "%");
+                    } else if (retval.result == false) {
+                        $("#progress-log").append(
+                            '<div> {= 表} ' + tables[name] +
+                            ' {= 数据为空}</div>'
+                        );
+                        doing += len;
+                        $("#progress").css({
+                            width: doing + "%"
+                        }).attr("aria-valuenow", doing).text(parseInt(doing) + "%");
+                    } else {
+                        $("#progress").addClass("bg-danger");
+                        $('#info').find("#ok").attr("disabled",
+                            false);
+                        $("#progress-log").append(
+                            '<div> {= 从表} ' + tables[name] +
+                            ' {= 恢复数据失败}</div>'
+                        );
+                        $("#progress").css({
+                            width: "100%"
+                        }).attr("aria-valuenow", 100).text(retval.error.message || '未知错误');
+                        break;
+                    }
+                }
+                $("#progress").addClass("bg-success");
+                $("#progress").removeClass("progress-bar-striped");
+                $('#info').find("#ok").attr("disabled", false);
+            }
+        }
+
+        $('[data-import]').on('click', function () {
+            const name = this.dataset.import;
+            $("#progress").addClass("progress-bar-striped");
+            $("#progress").addClass("progress-bar-animated");
+            $("#progress").addClass("bg-warning");
+            $("#progress").removeClass("bg-danger");
+            $("#progress").css({
+                width: "100%"
+            }).attr("aria-valuenow", 100).text('读取数据中');
+            $("#progress-log").text('{= 读取备份信息 } ' + name);
+            $('#info').modal('show');
+            importDatabase(name, 'importFrom');
+        });
+
+        $('[data-force-import]').on('click', function () {
+            const name = this.dataset.forceImport;
+            $("#progress").addClass("progress-bar-striped");
+            $("#progress").addClass("progress-bar-animated");
+            $("#progress").addClass("bg-warning");
+            $("#progress").removeClass("bg-danger");
+            $("#progress").css({
+                width: "100%"
+            }).attr("aria-valuenow", 100).text('读取数据中');
+            $("#progress-log").text('{= 读取备份信息 } ' + name);
+            $('#info').modal('show');
+            importDatabase(name, 'forceImportFrom');
+        });
+
+        $('#create').on('click', function () {
+            $("#progress").addClass("progress-bar-striped");
+            $("#progress").addClass("progress-bar-animated");
+            $("#progress").addClass("bg-warning");
+            $("#progress").removeClass("bg-danger");
+            $("#progress").css({
+                width: "100%"
+            }).attr("aria-valuenow", 100).text('创建备份中');
+            $("#progress-log").text('{= 创建数据备份 }');
+            $('#info').modal('show');
+            dx.xcall('database', 'create', {
+                success: (name) => {
+                    $("#progress-log").append(
+                        '<div> {= 新建备份} :' + name + '</div>'
+                    );
+                    $("#progress").removeClass("bg-warning");
+                    dx.xcall('database', 'status', {
+                        success: (tables) => {
+                            var len = 100 / tables.length;
+                            var doing = 0;
+
+                            function backupTable(tableInfo) {
+                                return new Promise((resolve, reject) => {
+                                    dx.xcall('database', 'backupTo', {
+                                        args: [name, tableInfo.name],
+                                        success: (result) => {
+                                            if (result) {
+                                                resolve({
+                                                    name: tableInfo
+                                                        .name,
+                                                    result: true
+                                                });
+                                            } else {
+                                                resolve({
+                                                    name: tableInfo
+                                                        .name,
+                                                    result: false
+                                                });
+                                            }
+                                        },
+                                        error: reject
+                                    });
+                                });
+                            }
+                            async function backupDatabase() {
+                                for (var name in tables) {
+                                    const ret = await backupTable(tables[name]);
+                                    doing += len;
+                                    if (ret.result == false) {
+                                        $("#progress-log").append(
+                                            '<div> {= 备份表} ' + ret.name +
+                                            ' {= 数据为空}</div>'
+                                        );
+                                    } else {
+                                        $("#progress-log").append(
+                                            '<div> {= 备份表} ' + ret.name +
+                                            ' {=成功}</div>'
+                                        );
+                                        $("#progress").css({
+                                            width: doing + "%"
+                                        }).attr("aria-valuenow", doing).text(
+                                            parseInt(doing) + "%");
+                                    }
+                                }
+                                $("#progress").addClass("bg-success");
+                                $("#progress").removeClass(
+                                    "progress-bar-striped");
+                                $('#info').find("#ok").attr("disabled", false);
+                            }
+                            backupDatabase();
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+<div class="modal fade" id="upload-backup" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="title">@_('上传备份')</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="upload-backup-file-input" type="file" name="zip" accept="application/zip">
+                <button id="upload-file" class="btn btn-primary">{=上传文件}</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="ok" data-dismiss="modal">@_('确认')</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#upload-backup-button').on('click', function () {
+            $('#upload-backup').modal('show');
+            $('#upload-backup').find('#upload-file').on('click', function () {
+                var file = document.getElementById('upload-backup-file-input').files[0];
+                dx.xcall('database', 'upload', {
+                    args: {
+                        backupFile: file
+                    },
+                    success: (result) => {
+                        $('#upload-backup').modal('show');
+                    }
+                });
+            });
+        });
+    });
+</script>
+@endinsert

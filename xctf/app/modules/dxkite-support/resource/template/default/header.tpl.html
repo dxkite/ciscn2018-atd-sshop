@@ -1,0 +1,54 @@
+<nav class="navbar navbar-dark sticky-top bg-dark navbar-expand-lg flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">{{ $:menuName('管理主页') }}</a>
+    <ul class="navbar-nav mr-auto">
+    </ul>
+    <ul class="navbar-nav px-3">
+        {:view.setting.header.navlist.prepend}
+        <li class="nav-item text-nowrap">
+            <a id="upload-template" class="nav-link" href="#">上传模板</a>
+        </li>
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="/">网站首页</a>
+        </li>
+        {:view.setting.header.navlist.append}
+    </ul>
+</nav>
+@startInsert('bs-footer')
+<div class="modal fade" id="info-upload" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="title">@_('上传模板')</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="upload-file-input" type="file" name="zip" accept="application/zip">
+                <button id="upload-file" class="btn btn-primary">{=上传文件}</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="ok" data-dismiss="modal">@_('确认')</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#upload-template').on('click', function () {
+            $('#info-upload').modal('show');
+            $('#upload-file').on('click', function () {
+                var file = document.getElementById('upload-file-input').files[0];
+                dx.xcall('uploadTheme', {
+                    args: {
+                        zip: file
+                    },
+                    success: (result) => {
+                        $('#info-upload').modal('hide');
+                    }
+                });
+            });
+        });
+    });
+</script>
+@endinsert

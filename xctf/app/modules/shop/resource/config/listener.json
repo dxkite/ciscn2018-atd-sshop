@@ -1,0 +1,4 @@
+{
+    "Router:dispatch::error":["xctf.shop.ShopApplication::htmlCsrfFormError"],
+    "loadModule": ["xctf.shop.Init::initSystem"]
+}

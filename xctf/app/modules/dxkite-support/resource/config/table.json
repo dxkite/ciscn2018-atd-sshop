@@ -1,0 +1,11 @@
+{
+    "prefix":"support_",
+    "tables": {
+        "role": "dxkite.support.table.visitor.RoleTable",
+        "grant": "dxkite.support.table.visitor.GrantTable",
+        "session": "dxkite.support.table.visitor.SessionTable",
+        "fileData": "dxkite.support.table.file.FileDataTable",
+        "fileInfo": "dxkite.support.table.file.FileInfoTable",
+        "setting": "dxkite.support.table.setting.SettingTable"
+    }
+}

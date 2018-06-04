@@ -1,0 +1,41 @@
+{
+    "name": "dxkite\/support",
+    "homepage": "http:\/\/atd3.cn",
+    "version": "1.2.12",
+    "locale": "zh-CN",
+    "namespace": "dxkite\\support",
+    "suda": ">=1.2.14",
+    "discription": "内置通用支持库，支持功能：网站设置、模板系统、用户系统、权限系统、文件系统",
+    "authors": [{
+        "name": "dxkite",
+        "email": "dxkite@qq.com"
+    }],
+    "table": {
+        "role": "dxkite.support.table.visitor.RoleTable",
+        "grant": "dxkite.support.table.visitor.GrantTable",
+        "session": "dxkite.support.table.visitor.SessionTable",
+        "fileData": "dxkite.support.table.file.FileDataTable",
+        "fileInfo": "dxkite.support.table.file.FileInfoTable",
+        "setting": "dxkite.support.table.setting.SettingTable"
+    },
+    "proxy": {
+        "grant": "dxkite.support.visitor.GrantManager",
+        "media": "dxkite.support.file.Media"
+    },
+    "open-api": {
+        "v1.0": {
+            "grant": "dxkite.support.visitor.GrantManager",
+            "database": "dxkite.support.database.DbHelper",
+            "template": "dxkite.support.template.Data"
+        }
+    },
+    "import": {
+        "share": {
+            "dxkite\\support": "share",
+            "support": "share/support.php"
+        },
+        "src": {
+            "dxkite\\support\\response": "src"
+        }
+    }
+}

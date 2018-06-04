@@ -1,0 +1,39 @@
+{
+    "support:admin_index": {
+        "name": "网站设置",
+        "sort": -999,
+        "child": {
+            "support:admin_index": {
+                "name": "网站状态"
+            },
+            "support:admin_setting": {
+                "name": "网站设置"
+            },
+            "support:admin_template": {
+                "name": "模板管理"
+            },
+            "support:admin_email": {
+                "name": "邮件设置"
+            }
+            ,
+            "support:admin_database": {
+                "name": "备份管理"
+            }
+        }
+    },
+    "support:admin_role_list": {
+        "name": "系统权限",
+        "sort": -998,
+        "child": {
+            "support:admin_role_list": {
+                "name": "角色列表"
+            },
+            "support:admin_role_add": {
+                "name": "添加角色"
+            },
+            "support:admin_role_edit": {
+                "name": "编辑角色"
+            }
+        }
+    }
+}

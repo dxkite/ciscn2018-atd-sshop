@@ -1,0 +1,21 @@
+{:setting.sidebar}
+<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+    <div class="sidebar-sticky">
+        <!-- 侧边栏 -->
+        @foreach($:admin.sidebar([]) as $id=>$item)
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <a class="d-flex align-items-center text-muted" href="{{$item['href']}}">{{$item['text']}}</a>
+        </h6>
+        @if(isset($item['child']))
+        <ul class="nav flex-column mb-2">
+            @foreach($item['child'] as $subitem)
+            <li class="nav-item">
+                <a class="nav-link @b($this->isMe($subitem['id']),'active')" href="{{$subitem['href']}}">
+                    {{$subitem['text']}}
+                </a>
+            </li>
+            @endforeach
+        </ul>
+        @endif @endforeach
+    </div>
+</nav>

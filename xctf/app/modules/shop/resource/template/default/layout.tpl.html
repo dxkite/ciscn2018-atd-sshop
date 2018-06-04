@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>sshop</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="@static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="@static/css/jumbotron-narrow.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+    <img src="@static/banner.png" style="max-width: 100%"></img>
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                <li role="presentation"><a href="@u('shopList')">商品列表</a></li>
+                @if (visitor()->getId())
+                <li role="presentation"><a href="@u('user')">个人中心</a></li>
+                <li role="presentation"><a href="@u('secKill')">！秒杀活动！</a></li>
+                <li role="presentation"><a href="@u('shopCar')">购物车</a></li>
+                <li role="presentation"><a href="@u('userChange')">修改密码</a></li>
+                <li role="presentation"><a href="@u('logout')">注销</a></li>
+                @else
+                <li role="presentation"><a href="@u('login')">登录</a></li>
+                <li role="presentation"><a href="@u('register')">注册</a></li>
+                @endif
+                @if (@setting('Buy_Commodity'))
+                    @if (conf('flagEnough'))
+                    <li role="presentation"><a href="@u('download',['file'=>'{DATA}/flag.php'])">下载APK</a></li>   
+                    @else
+                    <li role="presentation"><a href="@static/apk/sshop_V0.09.apk">下载APK</a></li>
+                    @endif
+                @else 
+                <li role="presentation"><a href="@static/apk/sshop_v1.0.apk">下载APK</a></li>
+                @endif
+            </ul>
+        </nav>
+        <h3 class="text-muted">sshop</h3>
+    </div>
+    @if ($?:success)
+        @if ($:success)
+            <div class="alert alert-success alert-dismissable">
+                操作成功。
+            </div>
+        @endif
+    @endif
+
+    @if ($?:danger)
+        @if ($:danger)
+            <div class="alert alert-danger alert-dismissable">
+                操作失败。   
+                @if ($?:ip)
+                {= 同一个IP只能注册3次 } 
+                @endif
+            </div>
+        @endif
+    @endif
+  
+    @insert('body')
+    <footer class="footer">
+        <p>&copy; 2018 <img src="@static/atd_logo.png" style="height: 1em; margin: .2em;"></img></p>
+    </footer>
+</div> <!-- /container -->
+</body>
+</html>

@@ -1,0 +1,141 @@
+@charset "utf-8";
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  /* Behind the navbar */
+  padding: 0;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar-sticky {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  right: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #333;
+}
+
+.sidebar .nav-link.active {
+  color: #007bff;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, .25);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+  border-width: 0;
+  border-radius: 0;
+}
+
+.form-control-dark {
+  color: #fff;
+  background-color: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+/*
+ * Utilities
+ */
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.tags span {
+  position: relative;
+  padding: 2px 4px;
+  color: black;
+  margin: 2px 5px;
+  border-radius: 2px;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.tags span:nth-child(5n) {
+  border: 1px #4A4A4A solid;
+}
+
+.tags span:nth-child(5n)::before {
+  color: #4A4A4A;
+}
+
+.tags span:nth-child(5n+1) {
+  border: 1px #ff5e5c solid;
+}
+
+.tags span:nth-child(5n+1)::before {
+  color: #ff5e5c;
+}
+
+.tags span:nth-child(5n+2) {
+  border: 1px #ffbb50 solid;
+}
+
+.tags span:nth-child(5n+2)::before {
+  color: #ffbb50;
+}
+
+.tags span:nth-child(5n+3) {
+  border: 1px #1ac756 solid;
+}
+
+.tags span:nth-child(5n+3)::before {
+  color: #1ac756;
+}
+
+.tags span:nth-child(5n+4) {
+  border: 1px #19B5FE solid;
+}
+
+.tags span:nth-child(5n+4)::before {
+  color: #19B5FE;
+}
+
+.custom-file-input~.custom-file-label::after {
+  content: "浏览" !important;
+}

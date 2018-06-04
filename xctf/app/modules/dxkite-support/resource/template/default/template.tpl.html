@@ -1,0 +1,220 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>{=模板名}</th>
+            <th>{=版本}</th>
+            <th>{=描述}</th>
+            <th>{=作者}</th>
+            <th>{=操作}</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($:list([]) as $item)
+        <tr>
+            <td>
+                <img style="height:1em" src="{{$item->icon}}" alt="icon"> {{ $item->name }} </td>
+            <td>{{ $item->version }}</td>
+            <td>{{ $item->discription }} </td>
+            <td>
+                <a href="{{$item->authorLink}}">{{ $item->author }}</a>
+            </td>
+            <td>
+                @if($item->uniqid == setting('template-id'))
+                <div class="btn-group btn-group-toggle">
+                    <a class="btn btn-success btn-sm" href="#" id="refresh">刷新资源</a>
+                    <a class="btn btn-secondary btn-sm" href="@u('support:admin_download',['name'=>$item->uniqid,'template'=>1])">{=下载模板}</a>
+                </div>
+                <div class="btn-group btn-group-toggle">
+                    <a class="btn btn-primary btn-sm" href="#" id="export">{=导出数据}</a>
+                    <a class="btn btn-info btn-sm" href="#" id="import">{=导入数据}</a>
+
+                </div>
+                @else
+                <div class="btn-group btn-group-toggle">
+                    <a class="btn btn-primary btn-sm" href="?template={{$item->uniqid}}">{=设为模板}</a>
+                    <a class="btn btn-danger btn-sm" href="?delete={{$item->uniqid}}">{=删除}</a>
+                </div>
+                @endif
+
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+@startInsert('bs-footer')
+<div class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="title">@_('刷新进度')</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div id="progress" class="progress-bar" role="progressbar" style="width: 0%; transition: 0.3s;" aria-valuenow="0" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                </div>
+                <div id="progress-log"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="ok" data-dismiss="modal" disabled>@_('确认')</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="@static('support')/call.js" data-api="@u('support:admin_ajax')"></script>
+<script>
+    $(function () {
+        $('#refresh').on('click', function () {
+            $('#info').modal('show');
+            var modules = JSON.parse('{{!$:modules}}');
+            var doing = 0;
+            var len = 100 / modules.length;
+            $("#progress").css({
+                width: doing + "%"
+            }).attr("aria-valuenow", doing).text(parseInt(doing) + "%");
+            $("#progress-log").text('@_("操作中...")');
+
+            function prodo(array) {
+                var element = array.shift();
+                $("#progress").addClass("progress-bar-striped");
+                dx.xcall('refreshModuleTemplate', {
+                    args: [element],
+                    success: (result) => {
+                        doing += len;
+                        $("#progress-log").append(
+                            '<div>' + element + ':' + result + '</div>'
+                        );
+                        $("#progress").css({
+                            width: doing + "%"
+                        }).attr("aria-valuenow", doing).text(parseInt(doing) + "%");
+                        if (array.length > 0) {
+                            prodo(array);
+                        } else {
+                            $("#progress").addClass("bg-success");
+                            $("#progress").removeClass("progress-bar-striped");
+                            $("#ok").attr('disabled', false);
+                        }
+                    },
+                    error: () => {
+                        $("#progress").addClass("bg-danger");
+                        $("#ok").attr('disabled', false);
+                    }
+                })
+            }
+            prodo(modules);
+        });
+        const templateApi = "@api(template:v1.0)";
+
+        $('#import').on('click', () => {
+            $("#progress").addClass("progress-bar-striped");
+            $("#progress").addClass("progress-bar-animated");
+            $("#progress").addClass("bg-warning");
+            $("#progress").removeClass("bg-danger");
+            $("#progress").css({
+                width: "100%"
+            }).attr("aria-valuenow", 100).text('读取数据中');
+            $("#progress-log").text('{= 读取备份信息 } ' + name);
+            $('#info').modal('show');
+            $('#info').find('#title').text('导入数据库');
+            var doProgress = async () => {
+                const ret = await dx.acall(templateApi, 'getTemplateTables');
+                const tables = ret.result;
+                $("#progress").removeClass("bg-warning");
+                var len = 100 / tables.length;
+                var doing = 0;
+                for (var name in tables) {
+                    const retval = await dx.acall(templateApi, 'importTemplateDataTable', [tables[
+                        name]]);
+
+                    if (retval.result) {
+                        $("#progress-log").append(
+                            '<div> {= 从表} ' + tables[name] +
+                            ' {= 恢复数据成功}</div>'
+                        );
+                        doing += len;
+                        $("#progress").css({
+                            width: doing + "%"
+                        }).attr("aria-valuenow", doing).text(parseInt(doing) + "%");
+                    } else if (retval.result == false) {
+                        $("#progress-log").append(
+                            '<div> {= 从表} ' + tables[name] +
+                            ' {= 恢复数据失败}</div>'
+                        );
+                        doing += len;
+                        $("#progress").css({
+                            width: doing + "%"
+                        }).attr("aria-valuenow", doing).text(parseInt(doing) + "%");
+                    } else {
+                        $("#progress").addClass("bg-danger");
+                        $('#info').find("#ok").attr("disabled",
+                            false);
+                        $("#progress-log").append(
+                            '<div> {= 从表} ' + tables[name] +
+                            ' {= 恢复数据失败}</div>'
+                        );
+                        $("#progress").css({
+                            width: "100%"
+                        }).attr("aria-valuenow", 100).text(retval.error.message || '未知错误');
+                        break;
+                    }
+                }
+                $("#progress").addClass("bg-success");
+                $("#progress").removeClass("progress-bar-striped");
+                $('#info').find("#ok").attr("disabled", false);
+            }
+            doProgress();
+        });
+
+        $('#export').on('click', function () {
+            $("#progress").addClass("progress-bar-striped");
+            $("#progress").addClass("progress-bar-animated");
+            $("#progress").addClass("bg-warning");
+            $("#progress").removeClass("bg-danger");
+            $("#progress").css({
+                width: "100%"
+            }).attr("aria-valuenow", 100).text('导出备份到模板中');
+            $("#progress-log").text('{= 创建数据备份 }');
+            $('#info').modal('show');
+            $('#info').find('#title').text('导出数据库');
+            dx.xcall(templateApi, 'getTemplateTables', {
+                success: (tables) => {
+                    var len = 100 / tables.length;
+                    var doing = 0;
+                    async function doTables(tables) {
+                        $("#progress").removeClass("bg-warning");
+                        for (var name in tables) {
+                            const ret = await dx.acall(templateApi,
+                                'exportTemplateDataTable', [tables[name]]);
+                            doing += len;
+                            if (ret.result == false) {
+                                $("#progress-log").append(
+                                    '<div> {= 备份表} ' + tables[name] +
+                                    ' {= 数据为空}</div>'
+                                );
+                            } else {
+                                $("#progress-log").append(
+                                    '<div> {= 备份表} ' + tables[name] +
+                                    ' {=成功}</div>'
+                                );
+                                $("#progress").css({
+                                    width: doing + "%"
+                                }).attr("aria-valuenow", doing).text(
+                                    parseInt(doing) + "%");
+                            }
+                        }
+                        $("#progress").addClass("bg-success");
+                        $("#progress").removeClass(
+                            "progress-bar-striped");
+                        $('#info').find("#ok").attr("disabled", false);
+                    }
+                    doTables(tables);
+                }
+            });
+        });
+    });
+</script>
+@endinsert

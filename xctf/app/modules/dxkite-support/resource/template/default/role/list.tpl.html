@@ -1,0 +1,38 @@
+<div class="row p-2">
+    <a href="@u('support:admin_role_add')" class="btn btn-primary">添加角色</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>角色</th>
+                <th>权限</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($:list([]) as $item)
+            <tr>
+                <td>{{ $item['id'] }}</td>
+                <td class="text-nowrap">{{ $item['name'] }}</td>
+                <td>
+                    <div class="tags">
+                        @foreach($item['permission']->jsonSerialize()??[] as $id)
+                        <span title="{{$id}}">{{ $item['permission']->alias($id) }}</span> @endforeach
+                    </div>
+                </td>
+                <td>
+                    <div class="btn-group btn-group-toggle">
+                        <a class="btn btn-secondary btn-sm" href="@u('support:admin_role_edit',$item['id'])">编辑</a>
+                        <a class="btn btn-danger btn-sm" href="@u(['delete'=>$item['id']])">删除</a>
+                    </div>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
+@data('dxkite\support\Bootstrap::page')

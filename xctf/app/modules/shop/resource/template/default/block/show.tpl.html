@@ -1,0 +1,16 @@
+@if ($?:wallet)
+
+    @if ( $?:block )
+    <div>Wallet #{{ $:wallet }}# </div>
+    <div>Flag Coin #{{ $:block.id }}</div>
+    <div>Time ：{{ $:block.time }}</div>
+    <div>Hash ：{{ $:block.hash }}</div>
+    <div>Previous hash ： {{ $:block.previous_hash }}</div>
+    <div>Nonce hash ：{{ $:block.nonce }}</div>
+    @else 
+        {= 未找到币  }
+    @endif
+
+@else 
+    {= 未找到钱包  }
+@endif 

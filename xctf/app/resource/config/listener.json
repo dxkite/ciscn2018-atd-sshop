@@ -1,0 +1,4 @@
+{
+    "template:SudaCompiler:init": [ "xctf.shop.ShopApplication::htmlCsrfFormRegister"],
+    "Router:dispatch::error": ["xctf.shop.ShopApplication::htmlCsrfFormError"]
+}

@@ -1,0 +1,32 @@
+{
+    "Application:init": [
+        "dxkite.support.setting.Setting::load",
+        "dxkite.support.visitor.Visitor::initVisitor",
+        "dxkite.support.visitor.Visitor::initLocate"
+    ],
+    "template:SudaCompiler:init": [
+        "dxkite.support.proxy.ProxyCall::addProxyCall",
+        "dxkite.support.setting.Setting::hookSetting",
+        "dxkite.support.api.Hook::setting",
+        "dxkite.support.setting.View::hook"
+    ],
+    "setting.sidebar": [
+        "dxkite.support.setting.View::renderAdminSidebar"
+    ],
+    "Router:prepareRouterInfo": [
+        "dxkite.support.api.Hook::registerOpenApiRoute",
+        "dxkite.support.setting.View::addAdminSidebar"
+    ],
+    "Router:runRouter::before":[
+        "dxkite.support.setting.View::adminSidebarTree"
+    ],
+    "system:displayException": [
+        "dxkite.support.proxy.exception.Handler::uncaughtException"
+    ],
+    "template:theme::change": [
+        "dxkite.support.template.Manager::compilerLoad"
+    ],
+    "Manager:loadCompile::before": [
+        "dxkite.support.template.Manager::compilerLoad"
+    ]
+}

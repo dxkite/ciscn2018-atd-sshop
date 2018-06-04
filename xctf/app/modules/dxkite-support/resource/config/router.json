@@ -1,0 +1,17 @@
+{
+    "upload": {
+        "class": "dxkite.support.file.Response",
+        "url": "/upload-{id:int=1}[.{type:string}]",
+        "anti-prefix": true
+    },
+    "image": {
+        "class": "dxkite.support.file.ImageResponse",
+        "url": "/image_{id:int=0}_{width:int}[x{height:int}][q{quality:int=75}][.{type:string}]",
+        "anti-prefix": true
+    },
+    "image-size": {
+        "class": "dxkite.support.file.ImageResponse",
+        "url": "/image_{id:int=0}_[s{size:int=10}][q{quality:int=75}][.{type:string}]",
+        "anti-prefix": true
+    }
+}

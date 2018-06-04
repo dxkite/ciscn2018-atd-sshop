@@ -1,0 +1,10 @@
+version: '2'
+services:
+  deploy-sshop:
+    build: .
+    ports:
+      - "80:80"
+    command:
+      - /bin/sh
+      - -c
+      - sh /start.sh && tail -f /opt/lampp/logs/access_log

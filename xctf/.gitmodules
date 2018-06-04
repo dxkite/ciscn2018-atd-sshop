@@ -1,0 +1,3 @@
+[submodule "support"]
+	path = app/modules/dxkite-support
+	url = https://github.com/DXkite/suda-support

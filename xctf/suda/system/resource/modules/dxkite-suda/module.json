@@ -1,0 +1,20 @@
+{
+    "icon": "icon.png",
+    "name": "dxkite/suda",
+    "version": "1.0.6",
+    "namespace": "dxkite\\suda",
+    "homepage": "http://atd3.cn",
+    "livemod": 1,
+    "authors": [{
+        "name": "dxkite",
+        "email": "dxktie@163.com"
+    }],
+    "discription": "Suda框架开发面板模块-内置",
+    "require": {},
+    "prefix": {
+        "admin": "-panel"
+    },
+    "response": {
+        "admin": "dxkite\\suda\\ACResponse"
+    }
+}
