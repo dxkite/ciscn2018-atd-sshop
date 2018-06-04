@@ -39,12 +39,14 @@ class Captcha
         $y = request()->get('captcha_y', request()->post('captcha_y'));
         if ($x && $y) {
             $uuid = session()->get('uuid');
-            $answer = self::getAns($uuid); 
-            debug()->info('captcha_info '.$x.' - '.$y.' - '.$uuid,$answer);
-            if ($answer['ans_pos_x_1'] <= $x &&  $x <= ($answer['ans_width_x_1'] + $answer['ans_pos_x_1'])) {
-                if ($answer['ans_pos_y_1']  <=$y && $y  <= ($answer['ans_height_y_1']  + $answer['ans_pos_y_1'])) {
-                    debug()->info('captcha_info success');
-                    return true;
+            if ($uuid) {
+                $answer = self::getAns($uuid); 
+                debug()->info('captcha_info '.$x.' - '.$y.' - '.$uuid,$answer);
+                if ($answer['ans_pos_x_1'] <= $x &&  $x <= ($answer['ans_width_x_1'] + $answer['ans_pos_x_1'])) {
+                    if ($answer['ans_pos_y_1']  <=$y && $y  <= ($answer['ans_height_y_1']  + $answer['ans_pos_y_1'])) {
+                        debug()->info('captcha_info success');
+                        return true;
+                    }
                 }
             }
             return false;
