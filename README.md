@@ -9,7 +9,7 @@
 
 ## Write Up
 
-[查看WriteUp](https://www.gksec.com/96.html)
+[查看WriteUp](http://t.cn/R1R1nMp)
 
 ## 解题思路
 
